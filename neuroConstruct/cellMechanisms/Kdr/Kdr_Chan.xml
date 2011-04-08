@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channelml xmlns="http://morphml.org/channelml/schema" 
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           xmlns:meta="http://morphml.org/metadata/schema" 
+           xsi:schemaLocation="http://morphml.org/channelml/schema    http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.8.1/Level2/ChannelML_v1.8.1.xsd"
+           units="Physiological Units">
+
+    <meta:notes>A channel from a granule cell model developed by Volker Steuber and Chiara Saviane, originally from Maex, R and De Schutter, E. 1998</meta:notes>
+    
+    
+    <channel_type name="Kdr">
+            
+        <status value="stable">
+          <meta:comment>From orig mod file:Based on Maex/De Schutter</meta:comment>
+            <meta:issue>From orig mod file:  V0beta_h = -44(mV) : or should it be +44? Left that as it was...</meta:issue>
+            <meta:issue>Orig mod file had: "if (alp_h &lt; 7.6e-4){" in proc for alp_h, PG changed it to: "if (alp_h &lt; TC*7.6e-4){"</meta:issue>
+            <meta:contributor>
+                <meta:name>Padraig Gleeson</meta:name>
+            </meta:contributor>
+        </status>
+    
+        <meta:notes>Delayed rectifier K+ current</meta:notes>
+
+        <meta:authorList>
+            <meta:modelAuthor>
+                <meta:name>Volker Steuber</meta:name>
+            </meta:modelAuthor>
+            <meta:modelAuthor>
+                <meta:name>Chiara Saviane</meta:name>
+            </meta:modelAuthor>
+          <meta:modelTranslator>
+            <meta:name>Padraig Gleeson</meta:name>
+            <meta:institution>UCL</meta:institution>
+            <meta:email>p.gleeson - at - ucl.ac.uk</meta:email>
+          </meta:modelTranslator>
+        </meta:authorList>
+           
+        
+        <meta:publication>
+           <meta:fullTitle>Maex, R and De Schutter, E. 
+           Synchronization of Golgi and Granule Cell Firing in a Detailed Network Model of the 
+           cerebellar Granule Cell Layer. J Neurophysiol, Nov 1998; 80: 2521 - 2537</meta:fullTitle>
+           <meta:pubmedRef>http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&amp;db=PubMed&amp;list_uids=9819260&amp;dopt=Abstract</meta:pubmedRef>
+        </meta:publication>     
+        
+        <meta:publication>
+            <meta:fullTitle>Berends, Michiel, Maex, Reinoud, De Schutter, Erik.
+            The Effect of NMDA Receptors on Gain Modulation.
+            Neural Comp. 2005 17: 2531-2547</meta:fullTitle>
+          <meta:pubmedRef>http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&amp;db=PubMed&amp;list_uids=16212761&amp;dopt=Abstract</meta:pubmedRef>
+        </meta:publication>  
+        
+        <meta:publication>
+          <meta:fullTitle>D'Angelo E, Nieus T, Maffei A, Armano S, Rossi P, Taglietti V, Fontana A, Naldi G. 
+            Theta-frequency bursting and resonance in cerebellar granule cells: experimental evidence and modeling of a slow k+-dependent mechanism.
+            J Neurosci. 2001 Feb 1;21(3):759-70.</meta:fullTitle>
+          <meta:pubmedRef>http://www.ncbi.nlm.nih.gov/sites/entrez?cmd=retrieve&amp;db=pubmed&amp;list_uids=11157062&amp;dopt=Abstract</meta:pubmedRef>
+        </meta:publication>     
+        
+    
+   
+        <meta:neuronDBref>
+            <meta:modelName>K channels</meta:modelName>
+            <meta:uri>http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table3</meta:uri>
+        </meta:neuronDBref>
+
+        <parameters>
+            <parameter name="shift" value ="-10"/> <!-- Will be overwritten when placed on cell-->
+        </parameters>
+
+        <current_voltage_relation cond_law="ohmic" ion="k" default_gmax="3" default_erev="-84.7">
+
+            <q10_settings fixed_q10="5" experimental_temp="37"/>
+
+            <gate name="m" instances="4">
+                <closed_state id="m0"/>
+                <open_state id="m"/>
+
+                <transition name="alpha" from="m0" to="m" expr_form="generic" expr="0.17 * (exp ( ((v + shift) +38)/13.7))"/>
+
+                <transition name="beta" from="m" to="m0" expr_form="generic" expr="0.17 * (exp ( ((v + shift) +38)/-55.55))"/>
+
+            </gate>
+
+            <gate name="h" instances="1">
+                <closed_state id="h0"/>
+                <open_state id="h"/>
+
+                <transition name="alpha" from="h0" to="h" expr_form="generic" expr="(v + shift) &gt; -46 ? 0.00076 : 0.0007 + 6.0e-5*(exp (-0.080*((v + shift) - (-46))))" />
+
+                <transition name="beta" from="h" to="h0" expr_form="generic" expr="1.1e-3 / (1 + (exp (((v + shift)- (-44))/-12.4)) )"/>
+
+            </gate>
+        </current_voltage_relation>
+        
+        
+        <impl_prefs>
+            <comment>Note, Using same table_divisions to get a closer match</comment>
+            <table_settings max_v="100" min_v="-100" table_divisions="200"/>
+        </impl_prefs>
+
+
+        
+    </channel_type>
+</channelml>

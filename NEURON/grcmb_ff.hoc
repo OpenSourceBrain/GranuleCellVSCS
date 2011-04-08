@@ -1,0 +1,214 @@
+// Granule cell model from Michiel Berends, Neural Comp 15, 2531-47 (2005)
+// originally modified by Chiara Saviane
+// further modified by VS, July 2006
+// inject tonic AMPA conductance
+
+//load_file("nrngui.hoc") // for GUI in Windows
+
+newseed = 1000
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// simulation parameters
+celsius = 37
+dt = 0.02 // ms 
+
+stimdel = 100
+stimdur = 5000
+tend = 100
+tstop = stimdel + stimdur + tend
+nbin = tstop/dt + 1
+
+vthresh = 0 // for spike detection
+vrest = -80
+tprespike = 0.5 // ms
+tpostspike = 1 // ms
+tmargin = 20 // ms safety margin that is cut off when calculating the mean
+
+// inhibition
+ngi = 6
+dgi = 250e-6 // uS
+
+// mossy fibre 'background' input
+nmf = 4
+trefmf = 1 // ms
+gmax_ampa = 1.0e-3 // uS
+nf = 150
+df = 1 // Hz per MF
+fstart = 1 // Hz per MF
+
+
+strdef ofile
+strdef ofile1
+
+objref ttrace, ttrace1
+objref vtrace, vtrace1, vbin
+ttrace = new Vector(nbin+1)
+ttrace1 = new Vector(nbin+1)
+vtrace = new Vector(nbin+1)
+vtrace1 = new Vector(nbin+1)
+vbin = new Vector(nbin+1)
+
+objref fmf, fout, vmean
+fmf = new Vector(nf)
+fout = new Vector(nf)
+vmean = new Vector(nf)
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// set up the granule cell model
+
+create soma
+soma {
+    
+    nseg = 1
+    L = 10
+    diam = 10
+    cm = 1
+    
+    insert naf_ms10
+    insert kv_ms10
+    insert ka_ms10
+    insert kca_ms10
+    insert ca_ms10
+    insert cacm_ms10
+    insert ksl
+    insert kir_ro
+    insert nap
+    // insert nar // not used
+    
+    gnabar_naf_ms10 = 0.04
+    gkbar_ka_ms10   = 0.004
+    
+    shift_naf_ms10	= -15 //this is replacing the values in the mod files, so it has to be -15
+    shift_kv_ms10	= -15
+    shift_ka_ms10	= -15
+    shift_kca_ms10	= -15
+    shift_ca_ms10	= -15
+    
+    insert pas
+    
+    ena   = 87.4  	// MS: 55, DA:87.4
+    ek    = -84.7 	// MS: -90 DA:-84.7 //modified CS -84.7 originally (this is what he used)
+    
+    g_pas = 6.366e-5//1.27e-4//6.366e-5//1.27e-4 // S/cm2  This is the Thevenin equivalent of the 2X200pS cconductances!!
+    e_pas = -60//-62.5//-60// -62.5 has to be used when the 2 conductances are implemented for Thevenin's theorem
+    
+    cao0_ca_ion = 1.2
+    cai0_ca_ion = 0.75e-4  
+    //cao   = 1.2      	// DA 2 ,depth=200nm, MS cao=1.2 mM, depth 84nm
+    //cai   = 0.75e-4      // DA 1e-4?, MS cai=0.75e-4
+    
+}
+
+// add inputs
+access soma
+    
+objref tonic_inh
+tonic_inh = new GrC_gt(0.5)
+tonic_inh.stdel = 0.0
+tonic_inh.stdur = tstop
+tonic_inh.gmax = 0.0e-3 //overwritten
+tonic_inh.e = -75.0
+
+objref ampa_mf[nmf]
+objref ns[nmf]
+objref nc[nmf]
+
+for cmf = 0, nmf-1 {
+    ampa_mf[cmf] = new Bekkers3SynA(0.5)  
+    ampa_mf[cmf].gmax = gmax_ampa
+    ns[cmf] = new NetStimF(0.5)
+    ns[cmf] nc[cmf] = new NetCon(ns[cmf], ampa_mf[cmf], 0, 0, 1)
+    ns[cmf].seed(newseed)
+    ns[cmf].start =  stimdel 
+    ns[cmf].duration = stimdur
+}				
+
+		
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// main simulation procedure
+
+proc myrun() {
+    
+  for (cgi = 0; cgi < ngi; cgi += 1) {
+      
+      tonic_inh.gmax = cgi*dgi // uS
+      print "injecting ", tonic_inh.gmax*1e6, "pS tonic inhibition"
+      
+      
+      for (cf = 0; cf < nf; cf += 1) {
+	  
+	  fmf.x[cf] = fstart + cf*df
+	  print "applying ", fmf.x[cf], " Hz mossy fibre trains"
+	  isimf = 1000/fmf.x[cf] // mean interval (ms)
+	  randomness = 1 - trefmf/isimf
+	  
+	  for cmf = 0, nmf-1 {
+	      ns[cmf].interval = isimf	       
+	      ns[cmf].noise = randomness        
+	  }				
+	  
+    	  finitialize(vrest)     
+	  
+	  i = 0 
+	  while (t < tstop) {
+   		fadvance()
+		ttrace.x[i] = t
+		vtrace.x[i] = soma.v(0.5)
+		//fprint("%g %g\n", ttrace.x[i], vtrace.x[i])
+		i += 1
+	  }
+	    
+	  //wopen()
+	    
+	  vtrace.resize(nbin-1) // cut off last element to avoid erroneous spikes
+	  vbin.spikebin(vtrace, vthresh)
+	  vtrace.resize(nbin)
+	  nspikes = vbin.sum()
+	  //print nspikes
+	  fout.x[cf] = nspikes/stimdur * 1000 // firing rate in Hz
+	  print "output firing rate = ", fout.x[cf], "Hz"
+
+
+          // cut off tprespike before and tpostspike after threshold crossing
+	  j = 0
+	  i = int(stimdel/dt)
+	  while (ttrace.x[i] < (stimdel + stimdur)) {
+		if (vbin.x[i]) { // spike at time i*dt
+			j -= int(tprespike/dt)
+			i += int(tpostspike/dt)
+		}
+
+		vtrace1.x[j] = vtrace.x[i]
+		ttrace1.x[j] = ttrace.x[i]
+		j += 1
+		i += 1
+	  }
+
+	  // cut off zeros at the end of vtrace1
+	  vtrace1.resize(j)
+          vmean.x[cf] = vtrace1.mean(int(tmargin/dt), j - int(tmargin/dt))
+	  vtrace1.resize(nbin+1)
+      }
+      
+      
+      
+      sprint(ofile1, "data/grcmb_ff_gm%dpS.dat", tonic_inh.gmax*1e6)
+      wopen(ofile1)
+      print "writing ", ofile1
+      
+      for (cf = 0; cf < nf; cf += 1) {
+	  fprint("%g %g %g\n", fmf.x[cf], fout.x[cf], vmean.x[cf])
+      }
+      
+      wopen()
+      
+  }
+}    
+
+  
+myrun()
+quit()
+

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.6.0_20" class="java.beans.XMLDecoder">
+
+<!-- Note that this XML is specific to the neuroConstruct Java cell object model and not any part of the NeuroML framework -->
+
+ <object class="ucl.physiol.neuroconstruct.cell.Cell">
+  <void property="allSegments">
+   <void method="add">
+    <object class="ucl.physiol.neuroconstruct.cell.Segment">
+     <void property="endPointPositionX">
+      <float>0.0</float>
+     </void>
+     <void property="endPointPositionY">
+      <float>0.0</float>
+     </void>
+     <void property="endPointPositionZ">
+      <float>0.0</float>
+     </void>
+     <void property="finiteVolume">
+      <boolean>true</boolean>
+     </void>
+     <void property="radius">
+      <float>5.0</float>
+     </void>
+     <void property="section">
+      <object class="ucl.physiol.neuroconstruct.cell.Section">
+       <void property="groups">
+        <void method="add">
+         <string>soma_group</string>
+        </void>
+       </void>
+       <void property="sectionName">
+        <string>Soma</string>
+       </void>
+       <void property="startPointPositionX">
+        <float>0.0</float>
+       </void>
+       <void property="startPointPositionY">
+        <float>0.0</float>
+       </void>
+       <void property="startPointPositionZ">
+        <float>0.0</float>
+       </void>
+       <void property="startRadius">
+        <float>5.0</float>
+       </void>
+      </object>
+     </void>
+     <void property="segmentId">
+      <int>0</int>
+     </void>
+     <void property="segmentName">
+      <string>Soma</string>
+     </void>
+    </object>
+   </void>
+  </void>
+  <void property="cellDescription">
+   <string>A Granule Cell model based on that from Berends et al 2005, implemented with the original mod files (obtained from Volker Steuber &amp; Chiara Saviane)</string>
+  </void>
+  <void property="chanMechsVsGroups">
+   <void method="put">
+    <object class="ucl.physiol.neuroconstruct.cell.ChannelMechanism">
+     <void property="density">
+      <float>3.5E-9</float>
+     </void>
+     <void property="name">
+      <string>Ksl</string>
+     </void>
+    </object>
+    <object class="java.util.Vector">
+     <void method="add">
+      <string>all</string>
+     </void>
+    </object>
+   </void>
+   <void method="put">
+    <object class="ucl.physiol.neuroconstruct.cell.ChannelMechanism">
+     <void property="density">
+      <float>6.366E-10</float>
+     </void>
+     <void property="name">
+      <string>GranCellPassiveCond</string>
+     </void>
+    </object>
+    <object class="java.util.Vector">
+     <void method="add">
+      <string>all</string>
+     </void>
+    </object>
+   </void>
+  </void>
+  <void property="instanceName">
+   <string>GranuleCell_Ksl</string>
+  </void>
+  <void property="specAxResVsGroups">
+   <void method="remove">
+    <float>300.0</float>
+   </void>
+   <void method="put">
+    <float>354.0</float>
+    <object class="java.util.Vector">
+     <void method="add">
+      <string>all</string>
+     </void>
+    </object>
+   </void>
+  </void>
+ </object>
+</java>

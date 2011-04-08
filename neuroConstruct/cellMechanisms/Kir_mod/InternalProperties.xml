@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.5.0_06" class="java.beans.XMLDecoder"> 
+ <object class="ucl.physiol.neuroconstruct.project.InternalPhysicalParameter"> 
+  <void property="defaultValue"> 
+   <float>1.0E-6</float> 
+  </void> 
+  <void property="parameterDescription"> 
+   <string>DEFAULT Maximum conductance for the channel mechanism per unitarea. NOTE: overwritten when mechanism is placed on membrane</string> 
+  </void> 
+  <void property="parameterName"> 
+   <string>Max Conductance Density</string> 
+  </void> 
+  <void property="units"> 
+   <object class="ucl.physiol.neuroconstruct.utils.units.Units"> 
+    <void property="name"> 
+     <string>neuroConstruct_conductanceDensity</string> 
+    </void> 
+   </object> 
+  </void> 
+  <void property="value"> 
+   <float>0.0010</float> 
+  </void> 
+ </object> 
+</java> 

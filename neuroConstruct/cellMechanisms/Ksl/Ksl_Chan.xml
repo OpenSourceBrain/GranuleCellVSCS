@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channelml xmlns="http://morphml.org/channelml/schema" 
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           xmlns:meta="http://morphml.org/metadata/schema"
+           xsi:schemaLocation="http://morphml.org/channelml/schema  http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.8.1/Level2/ChannelML_v1.8.1.xsd"
+           units="Physiological Units">
+
+    <meta:notes>A channel from a granule cell model developed by Volker Steuber and Chiara Saviane, originally from D'Angelo et al 2001</meta:notes>
+    
+    <channel_type name="Ksl">
+            
+        <status value="stable">
+            <meta:comment>Comment in original mod: Based on D'Angelo(2001)</meta:comment>
+            <meta:issue>Comment in original mod: Special infinity values have still to be implemented</meta:issue>
+            <meta:contributor>
+                <meta:name>Padraig Gleeson</meta:name>
+            </meta:contributor>
+        </status>
+    
+        <meta:notes>Slow K+ current, taken from D'Angelo et al 2001</meta:notes>
+
+        <meta:authorList>
+            <meta:modelAuthor>
+                <meta:name>Volker Steuber</meta:name>
+            </meta:modelAuthor>
+            <meta:modelAuthor>
+                <meta:name>Chiara Saviane</meta:name>
+            </meta:modelAuthor>
+          <meta:modelTranslator>
+            <meta:name>Padraig Gleeson</meta:name>
+            <meta:institution>UCL</meta:institution>
+            <meta:email>p.gleeson - at - ucl.ac.uk</meta:email>
+          </meta:modelTranslator>
+        </meta:authorList>
+        
+        <meta:publication>
+          <meta:fullTitle>Paola Rossi, Giovanna De Filippi, Simona Armano, Vanni Taglietti, and Egidio D'Angelo. 
+            The weaver Mutation Causes a Loss of Inward Rectifier Current Regulation in Premigratory Granule Cells of the Mouse Cerebellum
+            J. Neurosci. 18: 3537-3547, 2001</meta:fullTitle>
+          <meta:pubmedRef>http://www.ncbi.nlm.nih.gov/sites/entrez?cmd=retrieve&amp;db=pubmed&amp;list_uids=9570785&amp;dopt=Abstract</meta:pubmedRef>
+        </meta:publication>  
+        
+        <meta:publication>
+          <meta:fullTitle>D'Angelo E, Nieus T, Maffei A, Armano S, Rossi P, Taglietti V, Fontana A, Naldi G. 
+            Theta-frequency bursting and resonance in cerebellar granule cells: experimental evidence and modeling of a slow k+-dependent mechanism.
+            J Neurosci. 2001 Feb 1;21(3):759-70.</meta:fullTitle>
+          <meta:pubmedRef>http://www.ncbi.nlm.nih.gov/sites/entrez?cmd=retrieve&amp;db=pubmed&amp;list_uids=11157062&amp;dopt=Abstract</meta:pubmedRef>
+        </meta:publication>     
+   
+        <meta:neuronDBref>
+            <meta:modelName>K channels</meta:modelName>
+            <meta:uri>http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table3</meta:uri>
+        </meta:neuronDBref>
+
+        <current_voltage_relation cond_law="ohmic" ion="k" default_gmax="0.35" default_erev="-84.7">
+
+            <gate name="m" instances="1">
+                <closed_state id="m0"/>
+                <open_state id="m"/>
+
+                <transition name="alpha" from="m0" to="m" expr_form="exponential" rate="0.008" scale="40" midpoint="-30" />
+
+                <transition name="beta" from="m" to="m0" expr_form="exponential" rate="0.008" scale="-20" midpoint="-30" />
+
+                <steady_state name="inf" from="m0" to="m" expr_form="sigmoid" rate="1" scale="-6" midpoint="-30" />
+
+            </gate>
+        </current_voltage_relation>
+          
+
+        <impl_prefs>
+            <comment>Note, Using same table_divisions to get a closer match</comment>
+            <table_settings max_v="100" min_v="-100" table_divisions="200"/>
+        </impl_prefs>
+
+        
+        
+    </channel_type>
+</channelml>
