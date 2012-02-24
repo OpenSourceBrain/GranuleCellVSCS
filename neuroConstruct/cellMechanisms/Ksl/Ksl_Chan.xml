@@ -5,7 +5,8 @@
            xsi:schemaLocation="http://morphml.org/channelml/schema  http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.8.1/Level2/ChannelML_v1.8.1.xsd"
            units="Physiological Units">
 
-    <meta:notes>A channel from a granule cell model developed by Volker Steuber and Chiara Saviane, originally from D'Angelo et al 2001</meta:notes>
+    <meta:notes>A channel from a granule cell model developed by Volker Steuber and Chiara Saviane.
+    Originally from D'Angelo et al 2001</meta:notes>
     
     <channel_type name="Ksl">
             

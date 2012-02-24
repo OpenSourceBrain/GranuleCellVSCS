@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.6.0_20" class="java.beans.XMLDecoder">
+<java version="1.6.0_23" class="java.beans.XMLDecoder">
 
 <!-- This is a neuroConstruct project file. It's best to open this
 file with neuroConstruct, as opposed to editing it directly. 
@@ -9,7 +9,7 @@ part of NeuroML or any standardised XML specification. -->
 
  <object class="ucl.physiol.neuroconstruct.project.BasicProjectInfo">
   <void property="projectDescription">
-   <string>Conversion to NeuroML of a model granule cell developed by Volker Steuber and Chiara Saviane.
+   <string>Conversion to NeuroML of a model granule cell developed by Volker Steuber and Chiara Saviane.  
 
 Granule cell model developed by Volker Steuber &amp; Chiara Saviane
 
@@ -18,10 +18,10 @@ Based on Maex &amp; De Schutter 1998, D&apos;Angelo et al 2001 and Berends, Maex
 Conversion to NeuroML status
 NaF - checked with rates - updated to latest CML - added shift - valid - checked Gen
 NaP - checked with rates - updated to latest CML - no shift - valid - checked Gen
-Kir - checked with rates - updated to latest CML - no shift - valid - checked Gen
+Kir - checked with rates - updated to latest CML - no shift - valid - checked Gen, Moose &amp; LEMS
 Kdr - checked with rates - updated to latest CML - added shift - valid - checked Gen
 KA - checked with rates - updated to latest CML - added shift - valid - checked Gen
-Ksl - checked with rates - updated to latest CML - no shift - valid - checked Gen
+Ksl - checked with rates - updated to latest CML - no shift - valid - checked Gen, Moose &amp; LEMS
 CaHVA - checked with rates - updated to latest CML - added shift - valid - checkedGen
 KCa - checked with rates - updated to latest CML - added shift - valid - checkedGen
 
@@ -30,7 +30,7 @@ CaPool - checked - updated to latest CML - valid - checked Gen
 </string>
   </void>
   <void property="projectFileVersion">
-   <string>neuroConstruct v1.4.1</string>
+   <string>neuroConstruct v1.5.3</string>
   </void>
   <void property="projectName">
    <string>GranuleCellVSCS</string>
@@ -2236,11 +2236,11 @@ CaPool - checked - updated to latest CML - valid - checked Gen
     <string></string>
    </void>
    <void method="put">
-    <float>1.0</float>
+    <float>-1.0</float>
     <string></string>
    </void>
    <void method="put">
-    <float>-1.0</float>
+    <float>1.0</float>
     <string></string>
    </void>
    <void method="put">
@@ -2356,6 +2356,9 @@ end
     <string></string>
    </void>
   </void>
+  <void property="reloadSimAfterSecs">
+   <float>10.0</float>
+  </void>
   <void property="unitSystemToUse">
    <int>3</int>
   </void>
@@ -2363,13 +2366,13 @@ end
  <object class="ucl.physiol.neuroconstruct.psics.PsicsSettings"/>
  <object class="ucl.physiol.neuroconstruct.simulation.SimulationParameters">
   <void property="dt">
-   <float>0.005</float>
+   <float>0.01</float>
   </void>
   <void property="duration">
    <float>100.0</float>
   </void>
   <void property="reference">
-   <string>Sim_716</string>
+   <string>Sim_731</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>
@@ -3420,7 +3423,7 @@ end
     <object class="ucl.physiol.neuroconstruct.project.SimConfig">
      <void property="cellGroups">
       <void method="add">
-       <string>CG_Ksl</string>
+       <string>CG_Kdr</string>
       </void>
      </void>
      <void property="description">
@@ -3526,16 +3529,16 @@ end
        <string>Var_32</string>
       </void>
       <void method="add">
-       <string>Var_31</string>
-      </void>
-      <void method="add">
        <string>Var_9</string>
       </void>
       <void method="add">
-       <string>Var_30</string>
+       <string>Var_31</string>
       </void>
       <void method="add">
        <string>Var_8</string>
+      </void>
+      <void method="add">
+       <string>Var_30</string>
       </void>
       <void method="add">
        <string>Var_7</string>
