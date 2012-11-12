@@ -67,7 +67,7 @@
                 <closed_state id="m0"/>
                 <open_state id="m" fraction="1"/>
 
-                <transition name="alpha" from="m0" to="m" expr_form="generic" expr="8 / (1 + (exp (((v+shift) - (5))/-13.9)))"/>
+                <transition name="alpha" from="m0" to="m" expr_form="generic" expr="8 / (1 + (exp (((v+shift) - 5)/-13.9)))"/>
 
                 <transition name="beta" from="m" to="m0" expr_form="generic" expr="0.5*(((v+shift)-(-8.9))/(-5)) / (1 - (exp (-1 * ((v+shift)-(-8.9))/(-5)) ) )"/>
 

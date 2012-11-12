@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.6.0_23" class="java.beans.XMLDecoder">
+<java version="1.6.0_24" class="java.beans.XMLDecoder">
 
 <!-- Note that this XML is specific to the neuroConstruct Java cell object model and not any part of the NeuroML framework -->
 
@@ -61,8 +61,20 @@
   <void property="chanMechsVsGroups">
    <void method="put">
     <object class="ucl.physiol.neuroconstruct.cell.ChannelMechanism">
+     <void property="name">
+      <string>CaPool_mod</string>
+     </void>
+    </object>
+    <object class="java.util.Vector">
+     <void method="add">
+      <string>all</string>
+     </void>
+    </object>
+   </void>
+   <void method="put">
+    <object class="ucl.physiol.neuroconstruct.cell.ChannelMechanism">
      <void property="density">
-      <float>3.0E-8</float>
+      <float>4.0E-7</float>
      </void>
      <void property="extraParameters">
       <void method="add">
@@ -77,7 +89,7 @@
       </void>
      </void>
      <void property="name">
-      <string>Kdr_mod</string>
+      <string>NaF_mod</string>
      </void>
     </object>
     <object class="java.util.Vector">
@@ -93,6 +105,21 @@
      </void>
      <void property="name">
       <string>Ksl_mod</string>
+     </void>
+    </object>
+    <object class="java.util.Vector">
+     <void method="add">
+      <string>all</string>
+     </void>
+    </object>
+   </void>
+   <void method="put">
+    <object class="ucl.physiol.neuroconstruct.cell.ChannelMechanism">
+     <void property="density">
+      <float>6.366E-10</float>
+     </void>
+     <void property="name">
+      <string>GranCellPassiveCond</string>
      </void>
     </object>
     <object class="java.util.Vector">
@@ -131,7 +158,7 @@
    <void method="put">
     <object class="ucl.physiol.neuroconstruct.cell.ChannelMechanism">
      <void property="density">
-      <float>9.0E-9</float>
+      <float>3.0E-8</float>
      </void>
      <void property="extraParameters">
       <void method="add">
@@ -146,7 +173,7 @@
       </void>
      </void>
      <void property="name">
-      <string>CaHVA_mod</string>
+      <string>Kdr_mod</string>
      </void>
     </object>
     <object class="java.util.Vector">
@@ -188,7 +215,7 @@
    <void method="put">
     <object class="ucl.physiol.neuroconstruct.cell.ChannelMechanism">
      <void property="density">
-      <float>4.0E-7</float>
+      <float>9.0E-9</float>
      </void>
      <void property="extraParameters">
       <void method="add">
@@ -203,19 +230,7 @@
       </void>
      </void>
      <void property="name">
-      <string>NaF_mod</string>
-     </void>
-    </object>
-    <object class="java.util.Vector">
-     <void method="add">
-      <string>all</string>
-     </void>
-    </object>
-   </void>
-   <void method="put">
-    <object class="ucl.physiol.neuroconstruct.cell.ChannelMechanism">
-     <void property="name">
-      <string>CaPool_mod</string>
+      <string>CaHVA_mod</string>
      </void>
     </object>
     <object class="java.util.Vector">
@@ -251,21 +266,6 @@
      </void>
     </object>
    </void>
-   <void method="put">
-    <object class="ucl.physiol.neuroconstruct.cell.ChannelMechanism">
-     <void property="density">
-      <float>6.366E-10</float>
-     </void>
-     <void property="name">
-      <string>GranCellPassiveCond</string>
-     </void>
-    </object>
-    <object class="java.util.Vector">
-     <void method="add">
-      <string>all</string>
-     </void>
-    </object>
-   </void>
   </void>
   <void property="instanceName">
    <string>GranuleCell_mod_all</string>
@@ -292,10 +292,10 @@
    <void method="put">
     <object class="ucl.physiol.neuroconstruct.cell.IonProperties">
      <void property="name">
-      <string>k</string>
+      <string>na</string>
      </void>
      <void property="reversalPotential">
-      <float>-84.7</float>
+      <float>87.4</float>
      </void>
     </object>
     <object class="java.util.Vector">
@@ -307,10 +307,10 @@
    <void method="put">
     <object class="ucl.physiol.neuroconstruct.cell.IonProperties">
      <void property="name">
-      <string>na</string>
+      <string>k</string>
      </void>
      <void property="reversalPotential">
-      <float>87.4</float>
+      <float>-84.7</float>
      </void>
     </object>
     <object class="java.util.Vector">

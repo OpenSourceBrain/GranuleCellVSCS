@@ -86,9 +86,9 @@
                 <closed_state id="h0"/>
                 <open_state id="h"/>
 
-                <transition name="alpha" from="h0" to="h" expr_form="generic" expr="(v + shift) &gt; -46 ? 0.00076 : 0.0007 + 6.0e-5*(exp (-0.080*((v + shift) - (-46))))" />
+                <transition name="alpha" from="h0" to="h" expr_form="generic" expr="(v + shift) &gt; -46 ? 0.00076 : 0.0007 + 6.0e-5*(exp (-0.080*((v + shift) + 46)))" />
 
-                <transition name="beta" from="h" to="h0" expr_form="generic" expr="1.1e-3 / (1 + (exp (((v + shift)- (-44))/(-12.4))) )"/>
+                <transition name="beta" from="h" to="h0" expr_form="generic" expr="1.1e-3 / (1 + (exp (((v + shift) + 44)/(-12.4))) )"/>
 
             </gate>
         </current_voltage_relation>
